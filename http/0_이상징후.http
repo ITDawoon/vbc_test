@@ -1,0 +1,6 @@
+POST http://localhost:8080/callAnomaly/centerCode_1234
+Content-Type: application/json
+
+{
+  "centerCode": "centerCode_1234"
+}

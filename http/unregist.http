@@ -1,0 +1,7 @@
+POST http://localhost:8080/SCA/unregist/
+Content-Type: application/json
+
+{
+  "channelList": [14],
+  "tr_id": "20230607150859938381bbfeb"
+}
