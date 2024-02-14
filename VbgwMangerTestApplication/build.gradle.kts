@@ -22,6 +22,9 @@ repositories {
 }
 
 dependencies {
+    // Gson 추가
+    implementation("com.google.code.gson:gson:2.8.8")
+
     // Gradle 추가
     implementation("org.springframework.boot:spring-boot-gradle-plugin:3.0.6")
 
