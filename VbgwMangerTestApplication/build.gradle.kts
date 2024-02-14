@@ -22,17 +22,17 @@ repositories {
 }
 
 dependencies {
-    // ModelMapper 추가
-    //implementation("org.modelmapper:modelmapper:2.4.0")
-
-    // Json추가
-    implementation("org.json:json:20230618")
-
-    // Gson 추가
-    implementation("com.google.code.gson:gson:2.8.8")
+    // Gradle 추가
+    implementation("org.springframework.boot:spring-boot-gradle-plugin:3.0.6")
 
     // Lombok 추가
 	annotationProcessor("org.projectlombok:lombok")
+
+    // Spring-Web Module 추가
+    //implementation("org.springframework:spring-web:5.3.13")
+
+    // Servelet 추가
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
 
 	// Spring Boot Starter Web 추가
     implementation("org.springframework.boot:spring-boot-starter-web")
