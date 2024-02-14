@@ -1,6 +1,6 @@
 package com.rapeech.vbc.ha.daemon;
 
-import org.apache.hc.core5.http.HttpHeaders;
+//import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
