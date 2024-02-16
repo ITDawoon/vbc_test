@@ -1,6 +1,0 @@
-POST http://localhost:8080/calldelaylatency/center_A
-Content-Type: application/json
-
-{
-  "centercode" : "C001"
-}

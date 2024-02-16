@@ -1,6 +1,0 @@
-POST http://localhost:8080/vapi/channelstatus
-Content-Type: application/json
-
-{
-  "tenant_id": "freepbx"
-}

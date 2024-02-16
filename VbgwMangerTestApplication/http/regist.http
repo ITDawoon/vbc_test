@@ -1,7 +1,0 @@
-POST http://localhost:8080/sca/regist
-Content-Type: application/json
-
-{
-  "channelList": [14, 15, 16],
-  "tr_id": "20230607150859938381bbfeb"
-}

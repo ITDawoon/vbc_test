@@ -1,6 +1,0 @@
-POST http://localhost:8080/channelstatus/1
-Content-Type: application/json
-
-{
-  "channelNo": "1"
-}
