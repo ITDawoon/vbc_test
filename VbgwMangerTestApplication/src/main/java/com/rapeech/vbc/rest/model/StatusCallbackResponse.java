@@ -1,22 +1,22 @@
 package com.rapeech.vbc.rest.model;
 
 public class StatusCallbackResponse {
-    String result;
-    String comment;
+    String requestResult;
+    String requestMessage;
 
-    public String getResult() {
-        return this.result;
+    public String getRequestResult() {
+        return this.requestResult;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setRequestResult(String requestResult) {
+        this.requestResult = requestResult;
     }
 
-    public String getComment() {
-        return this.comment;
+    public String getRequestMessage() {
+        return this.requestMessage;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setRequestMessage(String requestMessage) {
+        this.requestMessage = requestMessage;
     }
 }

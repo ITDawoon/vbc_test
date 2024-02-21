@@ -1,33 +1,31 @@
 package com.rapeech.vbc.rest.model;
 
 public class StatusCallbackRequest {
-    int userId;
-    String title;
-    boolean completed;
+    String requestResult;
+    String requestMessage;
+    String status;
 
-    // Getters and setters
-    public int getUserId() {
-        return userId;
+    public String getRequestResult() {
+        return this.requestResult;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setRequestResult(String requestResult) {
+        this.requestResult = requestResult;
     }
 
-    public String getTitle() {
-        return title;
+    public String getRequestMessage() {
+        return this.requestMessage;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setRequestMessage(String requestMessage) {
+        this.requestMessage = requestMessage;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public String getStatus() {
+        return this.status;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setStatus(String status) {
+        this.status = status;
     }
-    
 }
