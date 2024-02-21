@@ -9,10 +9,10 @@ import com.rapeech.vbc.rest.model.StatusCallbackRequest;
 import com.rapeech.vbc.rest.model.StatusCallbackResponse;
 
 @Service
-public class StatusCallbackServiceImpl extends BaseStructure implements StatusCallbackService{
+public class StatusCallbackServiceImpl implements StatusCallbackService{
 
     @Override
-    public StatusCallbackResponse recvStatusCallback(StatusCallbackRequest request) {
+    public StatusCallbackResponse requestAndResponse(StatusCallbackRequest request) {
         //StatusCallbackResponse result = new StatusCallbackResponse();
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'StatusCallbackResponse'");
