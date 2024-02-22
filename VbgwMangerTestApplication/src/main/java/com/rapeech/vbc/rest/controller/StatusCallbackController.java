@@ -2,9 +2,6 @@ package com.rapeech.vbc.rest.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import springfox.documentation.spring.web.json.Json;
-
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +26,6 @@ import com.rapeech.vbc.rest.service.StatusCallbackService;
 public class StatusCallbackController {
 
     private static final Logger logger = LoggerFactory.getLogger(StatusCallbackController.class);
-
-    
 
     @ApiOperation(value = "Send Status Callback", notes = "Send status callback for POST requests")
     @RequestMapping(value = "/status/callback", method = RequestMethod.POST)
