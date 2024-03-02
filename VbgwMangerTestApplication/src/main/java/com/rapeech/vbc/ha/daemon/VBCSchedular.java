@@ -13,100 +13,101 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class VBCSchedular {
-    // Health Check Option 1: Health Check with Linux command
+
+    // Get Active server's data(processes status, ...)
+    // TODO-1 Standby Server -> Active Server, request Active server's data
 
 
+    private final RestTemplate restTemplate;
 
-    // Health Check Option 2: Health Check with API 사용
-    // private final RestTemplate restTemplate;
+    public VBCSchedular(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
-    // public VBCSchedular(RestTemplate restTemplate) {
-    //     this.restTemplate = restTemplate;
-    // }
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    // Server Active/Standby 상태값 및  가져오는 method
+    @Scheduled(fixedDelayString = "1000")
+    public void GetscheduledCron() {
+        // String url = "http://127.0.0.1:8082"; // 상대 서버의 URL을 여기에 입력하세요
+        String url = "https://jsonplaceholder.typicode.com/posts";
 
-    // // Server 상태값 가져오는 method
-    // @Scheduled(fixedDelayString = "1000")
-    // public void GetscheduledCron() {
-    //     // String url = "http://127.0.0.1:8082"; // 상대 서버의 URL을 여기에 입력하세요
-    //     String url = "https://jsonplaceholder.typicode.com/posts";
+        try {
+            String response = restTemplate.getForObject(url, String.class);
+            // 응답을 받아와서 처리하는 코드 작성
+            System.out.println("Status Code: " + response);
 
-    //     try {
-    //         String response = restTemplate.getForObject(url, String.class);
-    //         // 응답을 받아와서 처리하는 코드 작성
-    //         System.out.println("Status Code: " + response);
+            // TODO: 받은 응답값 Json형식의 .tx파일로 저장하는기능 추가
 
-    //         // TODO: 받은 응답값 Json형식의 .tx파일로 저장하는기능 추가
+        } catch (Exception e) {
+            // 예외 처리 (서버 응답이 없을 때 등)
+            System.err.println("HTTP error code : " + e.getMessage());
+        }
+    }
 
-    //     } catch (Exception e) {
-    //         // 예외 처리 (서버 응답이 없을 때 등)
-    //         System.err.println("HTTP error code : " + e.getMessage());
-    //     }
-    // }
+    // TODO-1 Regi/UnRegi request part로 수정할 예정
+    // TODO-2 Standby Server -> Active Server status change request
+    // POST request send with String Body has Set
+    @Scheduled(fixedDelayString = "10000") // (임시==1초로 변경함) 5초마다 실행되도록 스케쥴러 설정
+    private void Request() {
+        String IP = "127.0.0.1";
+        String Port = "8082";
 
-    // // TODO Regi/UnRegi request part로 수정할 예정
-    // // POST request send with String Body has Set
-    // @Scheduled(fixedDelayString = "10000") // (임시==1초로 변경함) 5초마다 실행되도록 스케쥴러 설정
-    // private void Request() {
-    //     String IP = "127.0.0.1";
-    //     String Port = "8082";
+        HttpURLConnection connection = null;
 
-    //     HttpURLConnection connection = null;
+        try {
+            logger.debug("Host IP : " + IP + " Port : " + Port);
 
-    //     try {
-    //         logger.debug("Host IP : " + IP + " Port : " + Port);
+            String urlString = "http://" + IP + ":" + Port + "/status/callback"; // 스키마와 경로 추가
 
-    //         String urlString = "http://" + IP + ":" + Port + "/status/callback"; // 스키마와 경로 추가
+            logger.debug(urlString);
 
-    //         logger.debug(urlString);
+            java.net.URL url = new java.net.URL(urlString);
+            connection = (HttpURLConnection) url.openConnection();
 
-    //         java.net.URL url = new java.net.URL(urlString);
-    //         connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(10000);
+            connection.setDoOutput(true);
 
-    //         connection.setRequestMethod("POST");
-    //         connection.setRequestProperty("Content-Type", "application/json");
-    //         connection.setConnectTimeout(10000);
-    //         connection.setReadTimeout(10000);
-    //         connection.setDoOutput(true);
+            // JSON DATA Send TEST DATA
+            // String jsonInputString = "{\"id\": 6, \"title\": \" \", \"body\": \" \"}";
 
-    //         // JSON DATA Send TEST DATA
-    //         // String jsonInputString = "{\"id\": 6, \"title\": \" \", \"body\": \" \"}";
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
 
-    //         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+            // JSON DATA Send TEST
+            // bw.write(jsonInputString);
+            bw.write("data");
+            bw.close();
 
-    //         // JSON DATA Send TEST
-    //         // bw.write(jsonInputString);
-    //         bw.write("data");
-    //         bw.close();
+            logger.debug("request sent");
 
-    //         logger.debug("request sent");
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                StringBuilder sb = new StringBuilder();
+                // 응답 본문 확인 (예: 서버가 반환하는 데이터)
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
 
-    //         if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-    //             StringBuilder sb = new StringBuilder();
-    //             // 응답 본문 확인 (예: 서버가 반환하는 데이터)
-    //             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
+                // TODO: 받은 응답값 Json형식의 .tx파일로 저장하는기능 추가
 
-    //             // TODO: 받은 응답값 Json형식의 .tx파일로 저장하는기능 추가
+                String line;
 
-    //             String line;
+                while ((line = br.readLine()) != null) {
+                    sb.append(line).append("&");
+                }
+                br.close();
 
-    //             while ((line = br.readLine()) != null) {
-    //                 sb.append(line).append("&");
-    //             }
-    //             br.close();
-
-    //             String output = sb.toString();
-    //             byte[] bytes = output.getBytes();
-    //         } else {
-    //             logger.error("HTTP error code: " + connection.getResponseCode());
-    //         }
-    //     } catch (Exception e) {
-    //         logger.error("Exception occurred", e); // 예외 처리 및 로깅
-    //     } finally {
-    //         if (connection != null) {
-    //             connection.disconnect(); // 연결 종료
-    //         }
-    //     }
-    // }
+                String output = sb.toString();
+                byte[] bytes = output.getBytes();
+            } else {
+                logger.error("HTTP error code: " + connection.getResponseCode());
+            }
+        } catch (Exception e) {
+            logger.error("Exception occurred", e); // 예외 처리 및 로깅
+        } finally {
+            if (connection != null) {
+                connection.disconnect(); // 연결 종료
+            }
+        }
+    }
 }
